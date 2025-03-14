@@ -8,8 +8,7 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
@@ -26,19 +25,68 @@ class Migration(migrations.Migration):
                 ('player_1_wins', models.IntegerField(default=0)),
                 ('player_2_wins', models.IntegerField(default=0)),
                 ('is_finished', models.BooleanField(default=False)),
-                ('player_1', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='games_as_player_1', to='game.player')),
-                ('player_2', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='games_as_player_2', to='game.player')),
-                ('winner', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='games_won', to='game.player')),
+                (
+                    'player_1',
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, related_name='games_as_player_1', to='game.player'
+                    ),
+                ),
+                (
+                    'player_2',
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, related_name='games_as_player_2', to='game.player'
+                    ),
+                ),
+                (
+                    'winner',
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name='games_won',
+                        to='game.player',
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
             name='Round',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('player_1_move', models.CharField(blank=True, choices=[('rock', 'Rock'), ('paper', 'Paper'), ('scissors', 'Scissors')], max_length=10, null=True)),
-                ('player_2_move', models.CharField(blank=True, choices=[('rock', 'Rock'), ('paper', 'Paper'), ('scissors', 'Scissors')], max_length=10, null=True)),
-                ('game', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='rounds', to='game.game')),
-                ('winner', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='rounds_won', to='game.player')),
+                (
+                    'player_1_move',
+                    models.CharField(
+                        blank=True,
+                        choices=[('rock', 'Rock'), ('paper', 'Paper'), ('scissors', 'Scissors')],
+                        max_length=10,
+                        null=True,
+                    ),
+                ),
+                (
+                    'player_2_move',
+                    models.CharField(
+                        blank=True,
+                        choices=[('rock', 'Rock'), ('paper', 'Paper'), ('scissors', 'Scissors')],
+                        max_length=10,
+                        null=True,
+                    ),
+                ),
+                (
+                    'game',
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, related_name='rounds', to='game.game'
+                    ),
+                ),
+                (
+                    'winner',
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name='rounds_won',
+                        to='game.player',
+                    ),
+                ),
             ],
         ),
     ]

@@ -1,0 +1,13 @@
+[run]
+branch = True
+omit =
+    games/urls.py
+    game/urls.py
+    games/wsgi.py
+    games/asgi.py
+    games/settings.py
+    game/apps.py
+    manage.py
+    */__init__.py
+    */tests/*
+    */migrations/*
