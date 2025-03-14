@@ -48,7 +48,6 @@ class RoundViewSet(viewsets.ModelViewSet):
                     {"message": f"El juego ha terminado. ¡Ganador: {game.winner}!", "game": GameSerializer(game).data},
                     status=status.HTTP_201_CREATED,
                 )
-
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

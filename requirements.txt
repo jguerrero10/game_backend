@@ -1,4 +1,5 @@
 black
+django-cors-headers
 flake8
 isort
 coverage

@@ -30,6 +30,7 @@ class RoundSerializer(serializers.ModelSerializer):
     """Serializer for the Round model."""
     player_1_move = serializers.ChoiceField(choices=['rock', 'paper', 'scissors'], required=True)
     player_2_move = serializers.ChoiceField(choices=['rock', 'paper', 'scissors'], required=True)
+    winner_name = serializers.CharField(read_only=True, source='winner.name', null=True)
 
     class Meta:
         """Metadata class for the RoundSerializer"""
