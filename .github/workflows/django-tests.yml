@@ -46,12 +46,6 @@ jobs:
       - name: Install PostgreSQL Client
         run: sudo apt-get update && sudo apt-get install -y postgresql-client
 
-      - name: Check PostgreSQL Container IP
-        run: |
-          IP_ADDRESS=$(docker inspect $(docker ps -q --filter "name=postgres") | grep IPAddress | awk '{print $2}' | tr -d '",')
-          echo "DB_HOST=$IP_ADDRESS" >> $GITHUB_ENV
-          echo "PostgreSQL IP Address: $IP_ADDRESS"
-
       - name: Set environment variables
         run: |
           echo "DJANGO_SETTINGS_MODULE=games.settings" >> $GITHUB_ENV
@@ -60,12 +54,13 @@ jobs:
           echo "DB_NAME=test_db" >> $GITHUB_ENV
           echo "DB_USER=user" >> $GITHUB_ENV
           echo "DB_PASSWORD=password" >> $GITHUB_ENV
+          echo "DB_HOST=postgres" >> $GITHUB_ENV
           echo "DB_PORT=5432" >> $GITHUB_ENV
 
       - name: Wait for PostgreSQL to be ready
         run: |
           for i in {1..20}; do
-            pg_isready -h $DB_HOST -p 5432 -U user && echo "PostgreSQL is ready" && exit 0
+            pg_isready -h postgres -p 5432 -U user && echo "PostgreSQL is ready" && exit 0
             echo "Waiting for PostgreSQL..." && sleep 5
           done
           echo "PostgreSQL did not become ready in time" && exit 1
