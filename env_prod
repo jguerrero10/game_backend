@@ -1,0 +1,7 @@
+SECRET_KEY=django-insecure-kws$nv&a6xgm1%+o=)jd1f475v#095jdkrp4@qzi%jyy6&*us*
+DEBUG=False
+DB_NAME=games_db
+DB_USER=admin
+DB_PASSWORD=`_H-{uO57<,C2g]#
+DB_HOST=/cloudsql/users-app-452718:us-central1:game-db
+DB_PORT=5432
