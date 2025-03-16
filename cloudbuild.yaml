@@ -43,7 +43,7 @@ substitutions:
   _DEBUG: "False"
   _DB_NAME: "games_db"
   _DB_USER: "admin"
-  _DB_PASSWORD: "R4Vg7pLn"stn+K#x"
+  _DB_PASSWORD: "Po3Y%7^v0)Qj?k{"
 
 images:
   - 'gcr.io/$PROJECT_ID/django-app'
