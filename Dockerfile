@@ -11,4 +11,4 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 EXPOSE 8080
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "games.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "games.wsgi:application"]
