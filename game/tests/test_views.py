@@ -15,6 +15,29 @@ class GameAPITestCase(APITestCase):
         """Set up the test case with initial data."""
         self.player_1 = Player.objects.create(name="Player 1")
         self.player_2 = Player.objects.create(name="Player 2")
+        self.player_3 = Player.objects.create(name="Player 3")
+        self.player_4 = Player.objects.create(name="Player 4")
+        self.player_5 = Player.objects.create(name="Player 5")
+        self.player_6 = Player.objects.create(name="Player 6")
+
+        for _ in range(10):
+            Game.objects.create(player_1=self.player_1, player_2=self.player_2, winner=self.player_1)
+
+        for _ in range(8):
+            Game.objects.create(player_1=self.player_2, player_2=self.player_3, winner=self.player_2)
+
+        for _ in range(7):
+            Game.objects.create(player_1=self.player_3, player_2=self.player_4, winner=self.player_3)
+
+        for _ in range(5):
+            Game.objects.create(player_1=self.player_4, player_2=self.player_5, winner=self.player_4)
+
+        for _ in range(3):
+            Game.objects.create(player_1=self.player_5, player_2=self.player_6, winner=self.player_5)
+
+        for _ in range(2):
+            Game.objects.create(player_1=self.player_6, player_2=self.player_1, winner=self.player_6)
+
         self.game = Game.objects.create(player_1=self.player_1, player_2=self.player_2)
 
     def test_create_player(self):
@@ -23,7 +46,7 @@ class GameAPITestCase(APITestCase):
         data = {"name": "New Player"}
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(Player.objects.count(), 3)
+        self.assertEqual(Player.objects.count(), 7)
 
     def test_create_game(self):
         """Test creating a new game."""
@@ -112,3 +135,33 @@ class GameAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("error", response.data)
         self.assertEqual(response.data["error"], "El juego no existe.")
+
+    def test_top_winners_returns_top_5_players(self):
+        """Verifica que el endpoint retorne el top 5 de jugadores."""
+        url = reverse('player-top-winners')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 5)
+
+        expected_names = ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5']
+        actual_names = [player['name'] for player in response.data]
+
+        self.assertEqual(actual_names, expected_names)
+
+    def test_top_winners_returns_empty_list_when_no_players(self):
+        """Verifica que el endpoint retorne una lista vacía si no hay jugadores."""
+        Player.objects.all().delete()
+
+        url = reverse('player-top-winners')
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, [])
+
+    def test_top_winners_rejects_post_request(self):
+        """Verifica que el endpoint rechace métodos POST."""
+        url = reverse('player-top-winners')
+        response = self.client.post(url, {})
+
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)

@@ -33,15 +33,6 @@ class GameViewSet(viewsets.ModelViewSet):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
 
-    def create(self, request, *args, **kwargs):
-        player_1_id = request.data.get('player_1')
-        player_2_id = request.data.get('player_2')
-
-        if Game.objects.filter(player_1_id=player_1_id, player_2_id=player_2_id, is_finished=False).exists():
-            return Response({"error": "El juego ya está en progreso."}, status=400)
-
-        return super().create(request, *args, **kwargs)
-
 class RoundViewSet(viewsets.ModelViewSet):
     """API endpoint that allows rounds to be viewed or edited."""
 
