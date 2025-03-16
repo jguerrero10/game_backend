@@ -9,24 +9,12 @@ steps:
     args: ['push', 'gcr.io/$PROJECT_ID/django-app']
 
   - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        DB_PASSWORD=$(gcloud secrets versions access latest --secret=DB_PASSWORD)
-        gcloud run deploy django-app \
-          --image gcr.io/$PROJECT_ID/django-app \
-          --platform managed \
-          --region us-central1 \
-          --allow-unauthenticated \
-          --add-cloudsql-instances=users-app-452718:us-central1:game-db \
-          --set-env-vars=SECRET_KEY=${_SECRET_KEY},DEBUG=${_DEBUG},DB_NAME=${_DB_NAME},DB_USER=${_DB_USER},DB_PASSWORD=$DB_PASSWORD,DB_HOST=/cloudsql/users-app-452718:us-central1:game-db,DB_PORT=5432
-
-substitutions:
-  _SECRET_KEY: "django-insecure-kws$nv&a6xgm1%+o=)jd1f475v#095jdkrp4@qzi%jyy6&*us*"
-  _DEBUG: "False"
-  _DB_NAME: "games_db"
-  _DB_USER: "admin"
-
-images:
-  - 'gcr.io/$PROJECT_ID/django-app'
+    args: [
+      'run', 'deploy', 'django-app',
+      '--image', 'gcr.io/$PROJECT_ID/django-app',
+      '--platform', 'managed',
+      '--region', 'us-central1',
+      '--allow-unauthenticated',
+      '--add-cloudsql-instances=users-app-452718:us-central1:game-db',
+      '--set-env-vars=SECRET_KEY=django-insecure-kws$nv&a6xgm1%+o=)jd1f475v#095jdkrp4@qzi%jyy6&*us*,DEBUG=False,DB_NAME=games_db,DB_USER=admin,DB_PASSWORD=8&N-&^K\\?NHgv4<,DB_HOST=/cloudsql/users-app-452718:us-central1:game-db,DB_PORT=5432'
+    ]
