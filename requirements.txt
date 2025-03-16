@@ -1,0 +1,16 @@
+black
+django-cors-headers
+flake8
+isort
+coverage
+pylint_django
+pytest
+pytest-django
+pytest-cov
+pytest-mock
+python-dotenv
+pylint
+Django
+djangorestframework
+gunicorn
+psycopg[binary]
