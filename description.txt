@@ -1,0 +1,26 @@
+Especificación del Problema
+El problema va a tratar de un juego muy conocido llamado Piedra, Papel o Tijera.
+Para poder iniciar el juego deben registrarse 2 jugadores, el juego consiste en seleccionar un
+movimiento (Piedra, Papel o Tijera) y cada movimiento le gana al otro de acuerdo a lo siguiente:
+• Papel le gana a la Piedra
+• Piedra le gana a Tijera
+• Tijera le gana a Papel
+
+• NOTA: En caso de que elijan el mismo movimiento hay empate y pasa a la siguiente
+ronda.
+
+El juego consiste en tener n rondas en las que cada jugador selecciona los movimientos. El jugador
+que complete 3 rondas ganadas; gana la batalla.
+La aplicación web debe tener lo siguiente:
+• Debe solicitar el registro de 2 jugadores en los que se les pide el nombre completo. El
+sistema debe registrarlo y asignarle un id automáticamente.
+• Una vez los jugadores se hayan registrado da inicio a las rondas donde cada jugador elije
+un movimiento.
+- Primero elije el jugador 1 y después el jugador 2, debe ser consecuente primero el
+jugador 1 y hasta que el jugador 1 no elija un movimiento el sistema no debe permitir
+que siga el jugador 2.
+• En pantalla debe ir mostrando los resultados parciales de cada una de las rondas y
+diciendo quién fue el ganador o en su defecto si hubo empate.
+• Éstas rondas se deben repetir hasta que un jugador gane 3 de las mismas.
+• Una vez el juego termine debe pedir si desea repetir el juego o si desea iniciar uno nuevo
+en donde se deben volver a registrar 2 nuevos jugadores.
