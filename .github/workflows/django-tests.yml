@@ -46,7 +46,13 @@ jobs:
       - name: Set environment variables
         run: |
           echo "DJANGO_SETTINGS_MODULE=games.settings" >> $GITHUB_ENV
-          echo "DATABASE_URL=postgres://user:password@localhost:5432/test_db" >> $GITHUB_ENV
+          echo "SECRET_KEY=django-insecure" >> $GITHUB_ENV
+          echo "DEBUG=True" >> $GITHUB_ENV
+          echo "DB_NAME=test_db" >> $GITHUB_ENV
+          echo "DB_USER=user" >> $GITHUB_ENV
+          echo "DB_PASSWORD=password" >> $GITHUB_ENV
+          echo "DB_HOST=postgres" >> $GITHUB_ENV
+          echo "DB_PORT=5432" >> $GITHUB_ENV
 
       - name: Run migrations
         run: python manage.py migrate
