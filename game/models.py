@@ -8,7 +8,7 @@ from game.service.game_service import GameService
 class Player(models.Model):
     """Model representing a player in the game."""
 
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         """Return the name of the player."""

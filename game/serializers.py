@@ -14,6 +14,11 @@ class PlayerSerializer(serializers.ModelSerializer):
         model = Player
         fields = '__all__'
 
+class TopPlayerSerializer(serializers.Serializer):
+    """Serializer for the top players with the most wins."""
+    name = serializers.CharField()
+    total_wins = serializers.IntegerField()
+
 
 class GameSerializer(serializers.ModelSerializer):
     """Serializer for the Game model."""
@@ -30,7 +35,7 @@ class RoundSerializer(serializers.ModelSerializer):
     """Serializer for the Round model."""
     player_1_move = serializers.ChoiceField(choices=['rock', 'paper', 'scissors'], required=True)
     player_2_move = serializers.ChoiceField(choices=['rock', 'paper', 'scissors'], required=True)
-    winner_name = serializers.CharField(read_only=True, source='winner.name', null=True)
+    winner_name = serializers.CharField(read_only=True, source='winner.name', allow_null=True)
 
     class Meta:
         """Metadata class for the RoundSerializer"""

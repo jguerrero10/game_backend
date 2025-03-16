@@ -1,10 +1,11 @@
 """Views for the game app."""
-
+from django.db.models import Count
 from rest_framework import status, viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from .models import Game, Player, Round
-from .serializers import GameSerializer, PlayerSerializer, RoundSerializer
+from .serializers import GameSerializer, PlayerSerializer, RoundSerializer, TopPlayerSerializer
 
 
 class PlayerViewSet(viewsets.ModelViewSet):
@@ -13,6 +14,18 @@ class PlayerViewSet(viewsets.ModelViewSet):
     queryset = Player.objects.all()
     serializer_class = PlayerSerializer
 
+    @action(detail=False, methods=['get'])
+    def top_winners(self, request):
+        """Return the top 5 players with the most wins."""
+        top_players = (
+            Player.objects
+            .values('name')
+            .annotate(total_wins=Count('games_won'))
+            .order_by('-total_wins')[:5]
+        )
+        serializer = TopPlayerSerializer(top_players, many=True)
+        return Response(serializer.data)
+
 
 class GameViewSet(viewsets.ModelViewSet):
     """API endpoint that allows games to be viewed or edited"""
@@ -20,6 +33,14 @@ class GameViewSet(viewsets.ModelViewSet):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
 
+    def create(self, request, *args, **kwargs):
+        player_1_id = request.data.get('player_1')
+        player_2_id = request.data.get('player_2')
+
+        if Game.objects.filter(player_1_id=player_1_id, player_2_id=player_2_id, is_finished=False).exists():
+            return Response({"error": "El juego ya está en progreso."}, status=400)
+
+        return super().create(request, *args, **kwargs)
 
 class RoundViewSet(viewsets.ModelViewSet):
     """API endpoint that allows rounds to be viewed or edited."""
