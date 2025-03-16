@@ -30,12 +30,18 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default-secret-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ["http://localhost:39765", 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', "django-app-480488096814.us-central1.run.app"]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://django-app-480488096814.us-central1.run.app'
+]
+CORS_ALLOWED_ORIGINS = [
+    "https://django-app-480488096814.us-central1.run.app"
+]
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
 CORS_ALLOW_HEADERS = ["*"]
 
-CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
