@@ -30,13 +30,13 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default-secret-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', "django-app-480488096814.us-central1.run.app"]
+ALLOWED_HOSTS = ['localhost:4200','localhost', '127.0.0.1', "django-app-480488096814.us-central1.run.app"]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://django-app-480488096814.us-central1.run.app'
 ]
 CORS_ALLOWED_ORIGINS = [
-    "https://django-app-480488096814.us-central1.run.app"
+    "https://django-app-480488096814.us-central1.run.app", "https://angular-game-app-480488096814.us-central1.run.app"
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
